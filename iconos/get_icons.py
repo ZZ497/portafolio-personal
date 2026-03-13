@@ -1,0 +1,23 @@
+import urllib.request
+import re
+
+icons = [
+    "html5", "css3", "javascript", "figma", "php", "java", "mysql", 
+    "laravel", "symfony", "kotlin", "swift", "github", "git", "docker", "androidstudio"
+]
+
+for icon in icons:
+    try:
+        url = f"https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/{icon}.svg"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        response = urllib.request.urlopen(req)
+        svg_content = response.read().decode('utf-8')
+        match = re.search(r'<path[^>]*d="([^"]+)"', svg_content)
+        if match:
+            with open(f"/Users/dam1/Documents/portafolio-personal/{icon}.svg_path.txt", "w") as f:
+                f.write(match.group(1))
+            print(f"Got {icon}")
+        else:
+            print(f"No path found for {icon}")
+    except Exception as e:
+        print(f"Error fetching {icon}: {e}")
