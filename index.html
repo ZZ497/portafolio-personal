@@ -1,481 +1,791 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diego Lijarcio Merino - CV Interactivo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        @media print { .no-print { display: none !important; } }
-        .animate-fade-in { animation: fadeIn 0.6s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .timeline-dot { transition: all 0.3s ease; }
-        .timeline-item:hover .timeline-dot { background-color: #2563eb; transform: scale(1.2); }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diego Lijarcio — Dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0A0A0C;
+      --bg2:       #111114;
+      --bg3:       #18181C;
+      --border:    #222228;
+      --muted:     #48484F;
+      --body:      #8E8E99;
+      --text:      #DDDDE8;
+      --accent:    #5B7FFF;
+      --accent2:   #8BA3FF;
+      --white:     #F0F0F5;
+      --green:     #34D399;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+      background: rgba(10,10,12,0.90);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--white);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo em { color: var(--accent); font-style: normal; }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--white);
+      background: var(--accent);
+      text-decoration: none;
+      padding: 0.45rem 1.1rem;
+      border-radius: 6px;
+      transition: opacity .2s;
+      letter-spacing: 0.01em;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 2.5rem 5rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--green);
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+    }
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+    }
+
+    .hero-name {
+      font-size: clamp(2.6rem, 6.5vw, 5rem);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-size: clamp(1rem, 2.2vw, 1.4rem);
+      font-weight: 300;
+      color: var(--body);
+      letter-spacing: -0.01em;
+      margin-bottom: 2.5rem;
+    }
+    .hero-title strong { color: var(--accent2); font-weight: 500; }
+
+    .hero-bio {
+      font-size: 1rem;
+      color: var(--body);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .hero-bio b { color: var(--text); font-weight: 500; }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: var(--white);
+      font-weight: 500;
+      font-size: 0.875rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity .2s, transform .15s;
+      letter-spacing: 0.005em;
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--body);
+      font-weight: 400;
+      font-size: 0.875rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color .2s, color .2s, transform .15s;
+    }
+    .btn-ghost:hover { border-color: var(--muted); color: var(--white); transform: translateY(-1px); }
+
+    .hero-meta {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
+    .meta-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--muted);
+    }
+    .meta-dot.live { background: var(--green); box-shadow: 0 0 0 2px rgba(52,211,153,.2); }
+
+    /* ── SECTIONS ── */
+    section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2.5rem;
+    }
+
+    .section-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.025em;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+    .divider hr {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 2.5rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:first-child { border-top: 1px solid var(--border); }
+
+    .exp-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      padding-top: 0.25rem;
+      line-height: 1.7;
+    }
+
+    .exp-company {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .exp-role {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.65rem;
+      letter-spacing: -0.01em;
+    }
+
+    .exp-desc {
+      font-size: 0.925rem;
+      color: var(--body);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .exp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .skill-group {
+      background: var(--bg2);
+      padding: 1.5rem;
+    }
+
+    .skill-group-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .skill-tag {
+      font-size: 0.82rem;
+      color: var(--text);
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      transition: border-color .2s, color .2s;
+    }
+    .skill-tag:hover { border-color: var(--accent); color: var(--accent2); }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .project-row {
+      background: var(--bg2);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 2rem;
+      padding: 2rem 2rem;
+      transition: background .2s;
+    }
+    .project-row:hover { background: var(--bg3); }
+
+    .project-type {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+
+    .project-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.55rem;
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--body);
+      line-height: 1.7;
+      max-width: 540px;
+      margin-bottom: 1rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      padding-top: 0.25rem;
+      transition: color .2s;
+    }
+    .project-link:hover { color: var(--accent2); }
+
+    /* ── CONTACT ── */
+    #contact {
+      text-align: center;
+    }
+
+    .contact-wrap {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .contact-headline {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .contact-sub {
+      font-size: 0.95rem;
+      color: var(--body);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.75rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .footer-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      #hero, section { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .project-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    /* ── SCROLL FADE ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
-    <nav class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 no-print">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <span class="font-bold text-xl text-slate-900">DLM</span>
-            <div class="hidden md:flex gap-8 text-sm font-medium text-slate-600">
-                <a href="#" class="hover:text-blue-600 transition-colors">Inicio</a>
-                <a href="#experience" class="hover:text-blue-600 transition-colors">Experiencia</a>
-                <a href="#skills" class="hover:text-blue-600 transition-colors">Habilidades</a>
-                <a href="#projects" class="hover:text-blue-600 transition-colors">Proyectos</a>
-            </div>
-        </div>
-    </nav>
+<body>
 
-    <main>
-        <section class="relative pt-20 pb-12 md:pt-32 md:pb-24 px-6 max-w-5xl mx-auto">
-            <div class="flex flex-col md:flex-row items-center gap-10">
-                <div class="flex-1 space-y-6 text-center md:text-left animate-fade-in">
-                    <!-- CAMBIO: badge actualizado -->
-                    <div class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-2">
-                        Disponible para nuevas oportunidades
-                    </div>
-                    <h1 class="text-4xl md:text-6xl font-bold text-slate-900 tracking-tight">
-                        Hola, soy <span class="text-blue-600">Diego Lijarcio Merino</span>
-                    </h1>
-                    <h2 class="text-xl md:text-2xl text-slate-600 font-medium">
-                        Desarrollador Junior Multiplataforma
-                    </h2>
-                    <p class="text-slate-600 text-lg leading-relaxed max-w-2xl mx-auto md:mx-0">
-                        Graduado en Desarrollo de Aplicaciones Multiplataforma, motivado por seguir creciendo profesionalmente en el ámbito del desarrollo. Me caracterizo por mi sentido de la responsabilidad, mi disposición para aprender y mi capacidad para trabajar tanto de forma autónoma como en equipo, aportando criterio y colaboración en cada proyecto.
-                    </p>
-                    <div class="flex flex-wrap justify-center md:justify-start gap-4 text-slate-600 mt-4">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                            <span>+34 655 22 16 20</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                            <span class="text-sm">diegolijarcio388@gmail.com</span>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap justify-center md:justify-start gap-4 pt-4">
-                        <a href="mailto:diegolijarcio388@gmail.com" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20">Contáctame</a>
-                        <button onclick="descargarCVFetch()" class="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-lg font-semibold hover:bg-slate-50 transition-colors flex items-center gap-2 cursor-pointer">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            Descargar CV <span class="text-sm text-slate-500">· PDF · 1 página · 1.2 MB</span>
-                        </button>
-                        <script>
-                        async function descargarCVFetch() {
-                            try {
-                                const response = await fetch('/assests/CV_Diego.pdf');
-                                const blob = await response.blob();
-                                const url = window.URL.createObjectURL(blob);
-                                const link = document.createElement('a');
-                                link.href = url;
-                                link.download = 'Diego_Lijarcio_Merino_CV.pdf';
-                                document.body.appendChild(link);
-                                link.click();
-                                document.body.removeChild(link);
-                                window.URL.revokeObjectURL(url);
-                            } catch (error) {
-                                window.open('assests/CV_Diego.pdf', '_blank');
-                            }
-                        }
-                        </script>
-                    </div>
-                    <div class="flex justify-center md:justify-start gap-6 pt-6 text-slate-400">
-                        <a href="https://github.com/ZZ497" target="_blank" rel="noopener noreferrer" class="hover:text-slate-900 transition-colors">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                        </a>
-                        <a href="https://www.linkedin.com/in/diego-lijarcio-merino/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-700 transition-colors">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="w-48 h-48 md:w-72 md:h-72 flex-shrink-0 relative animate-fade-in">
-                    <div class="absolute inset-0 bg-blue-600 rounded-full blur-2xl opacity-20 animate-pulse"></div>
-                    <img src="./img/1764575902098.jpg" alt="Diego Lijarcio Merino" class="w-full h-full object-cover rounded-full border-4 border-white shadow-2xl relative z-10">
-                </div>
-            </div>
-        </section>
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">diego<em>.</em>dev</span>
+    <ul class="nav-links">
+      <li><a href="#experience">Experiencia</a></li>
+      <li><a href="#skills">Stack</a></li>
+      <li><a href="#projects">Proyectos</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+    <a class="nav-cta" href="mailto:diegolijarcio388@gmail.com">Escríbeme</a>
+  </nav>
 
-        <section id="experience" class="py-16 px-6 max-w-4xl mx-auto">
-            <div class="flex items-center gap-3 mb-10">
-                <div class="p-2 bg-blue-100 rounded-lg text-blue-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                </div>
-                <h2 class="text-3xl font-bold text-slate-900">Experiencia y Formación</h2>
-            </div>
+  <!-- HERO -->
+  <section id="hero">
+    <p class="hero-tag">Disponible para trabajar</p>
+    <h1 class="hero-name">Diego Lijarcio Merino</h1>
+    <p class="hero-title">Desarrollador <strong>backend · frontend · mobile</strong></p>
 
-            <div class="space-y-12 border-l-2 border-slate-200 ml-3 pl-8 md:pl-12 relative">
+    <p class="hero-bio">
+      He pasado los últimos dos años construyendo cosas reales: un ERP de fichajes para una empresa industrial,
+      módulos backend en producción con Symfony, y apps Android que consumen APIs externas.
+      <b>Kotlin, PHP, Astro, Swift.</b> Inglés C1 Cambridge.
+      Buscando equipo técnico en remoto o híbrido.
+    </p>
 
-                <!-- Educación — CAMBIO: fechas Sep 2023 - Jun 2025 -->
-                <div class="relative timeline-item">
-                    <div class="timeline-dot absolute -left-[41px] md:-left-[57px] top-1 w-5 h-5 rounded-full border-4 border-white bg-slate-300 shadow-sm"></div>
-                    <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
-                        <h3 class="text-xl font-bold text-slate-900">Grado Superior en Desarrollo de Aplicaciones Multiplataforma</h3>
-                        <span class="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full mt-2 sm:mt-0 w-fit">Sep 2023 - Jun 2025</span>
-                    </div>
-                    <div class="text-lg text-blue-600 font-medium mb-3">Escuela ESTECH / CESUR</div>
-                    <p class="text-slate-600 mb-4">Formación integral en desarrollo de aplicaciones para múltiples plataformas.</p>
-                    <ul class="space-y-2">
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Desarrollo de interfaces web utilizando HTML, CSS y JavaScript</span></li>
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Programación orientada a objetos con Java</span></li>
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Diseño y prototipado de interfaces mediante Figma</span></li>
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Gestión y consultas en bases de datos MySQL</span></li>
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Desarrollo de aplicaciones móviles con Kotlin (Android)</span></li>
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Programación backend con PHP y uso del framework Laravel</span></li>
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Desarrollo de aplicaciones iOS con Swift</span></li>
-                    </ul>
-                </div>
-
-                <!-- Prácticas CODE ARTS -->
-                <div class="relative timeline-item">
-                    <div class="timeline-dot absolute -left-[41px] md:-left-[57px] top-1 w-5 h-5 rounded-full border-4 border-white bg-slate-300 shadow-sm"></div>
-                    <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
-                        <h3 class="text-xl font-bold text-slate-900">Prácticas Laborales</h3>
-                        <span class="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full mt-2 sm:mt-0 w-fit">Ene 2025 - Feb 2025</span>
-                    </div>
-                    <div class="text-lg text-blue-600 font-medium mb-3">CODE ARTS</div>
-                    <p class="text-slate-600 mb-4">Experiencia práctica en desarrollo backend y gestión de entornos de desarrollo.</p>
-                    <ul class="space-y-2">
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Apoyo en tareas de desarrollo backend con Symfony</span></li>
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Uso básico de Docker para ejecución de entornos de desarrollo</span></li>
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Manipulación de bases de datos SQLite y DynamoDB para consultas simples</span></li>
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Manejo de Git y GitHub para control de versiones y repositorios</span></li>
-                    </ul>
-                </div>
-
-                <!-- NUEVO: Prácticas CETEMET -->
-                <div class="relative timeline-item">
-                    <div class="timeline-dot absolute -left-[41px] md:-left-[57px] top-1 w-5 h-5 rounded-full border-4 border-white bg-blue-400 shadow-sm"></div>
-                    <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
-                        <h3 class="text-xl font-bold text-slate-900">Prácticas en Centro Tecnológico</h3>
-                        <span class="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full mt-2 sm:mt-0 w-fit">Abr 2026 - Jun 2026</span>
-                    </div>
-                    <div class="text-lg text-blue-600 font-medium mb-3">CETEMET</div>
-                    <p class="text-slate-600 mb-4">Desarrollo de un ERP interno desde cero para la gestión de fichajes y control de permisos del personal.</p>
-                    <ul class="space-y-2">
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Diseño y desarrollo de un ERP web para registro de fichajes de empleados y gestión de permisos por parte del administrador</span></li>
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Desarrollo frontend con Astro, tomando decisiones de arquitectura de forma autónoma</span></li>
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Diseño UX/UI orientado a la usabilidad y experiencia del usuario final</span></li>
-                        <li class="flex items-start gap-2 text-slate-600 text-sm"><span class="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0"></span><span>Trabajo en entorno profesional real con metodología de proyecto y comunicación con tutor técnico</span></li>
-                    </ul>
-                </div>
-
-                
-
-                <!-- Certificación -->
-                <div class="relative timeline-item">
-                    <div class="timeline-dot absolute -left-[41px] md:-left-[57px] top-1 w-5 h-5 rounded-full border-4 border-white bg-slate-300 shadow-sm"></div>
-                    <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
-                        <h3 class="text-xl font-bold text-slate-900">C1 Advanced Cambridge (CAE)</h3>
-                        <span class="text-sm font-medium text-green-600 bg-green-100 px-3 py-1 rounded-full mt-2 sm:mt-0 w-fit">Certificación</span>
-                    </div>
-                    <div class="text-lg text-blue-600 font-medium mb-3">Inglés - Nivel Avanzado</div>
-                    <p class="text-slate-600">Certificación oficial de nivel C1 en inglés por Cambridge Assessment English.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills" class="py-16 px-6 bg-white">
-            <div class="max-w-5xl mx-auto">
-                <div class="flex items-center gap-3 mb-10">
-                    <div class="p-2 bg-purple-100 rounded-lg text-purple-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <h2 class="text-3xl font-bold text-slate-900">Habilidades Técnicas</h2>
-                </div>
-
-                <div class="grid grid-cols-1 gap-10 mb-12">
-
-                    <!-- Frontend & Web -->
-                    <div class="space-y-5">
-                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Frontend & Web</h3>
-
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-medium text-slate-700">HTML</span>
-                                <div class="flex gap-1">
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                </div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full" style="width:80%"></div></div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-medium text-slate-700">CSS</span>
-                                <div class="flex gap-1">
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                </div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full" style="width:80%"></div></div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-medium text-slate-700">JavaScript</span>
-                                <div class="flex gap-1">
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                </div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full" style="width:60%"></div></div>
-                        </div>
-
-                        <!-- NUEVO: Astro -->
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-medium text-slate-700">Astro</span>
-                                <div class="flex gap-1">
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                </div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full" style="width:60%"></div></div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-medium text-slate-700">Figma</span>
-                                <div class="flex gap-1">
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                    <svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                                </div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full" style="width:80%"></div></div>
-                        </div>
-                    </div>
-
-                    <!-- Backend -->
-                    <div class="space-y-5">
-                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Backend & Bases de Datos</h3>
-                        <div>
-                            <div class="flex justify-between items-center mb-2"><span class="font-medium text-slate-700">PHP</span>
-                                <div class="flex gap-1"><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:80%"></div></div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between items-center mb-2"><span class="font-medium text-slate-700">Java</span>
-                                <div class="flex gap-1"><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-red-400 to-red-600 rounded-full" style="width:85%"></div></div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between items-center mb-2"><span class="font-medium text-slate-700">MySQL</span>
-                                <div class="flex gap-1"><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:80%"></div></div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between items-center mb-2"><span class="font-medium text-slate-700">Laravel</span>
-                                <div class="flex gap-1"><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:85%"></div></div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between items-center mb-2"><span class="font-medium text-slate-700">Symfony</span>
-                                <div class="flex gap-1"><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full" style="width:40%"></div></div>
-                        </div>
-                    </div>
-
-                    <!-- Móvil -->
-                    <div class="space-y-5">
-                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Desarrollo Móvil</h3>
-                        <div>
-                            <div class="flex justify-between items-center mb-2"><span class="font-medium text-slate-700">Kotlin</span>
-                                <div class="flex gap-1"><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-orange-400 to-red-500 rounded-full" style="width:90%"></div></div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between items-center mb-2"><span class="font-medium text-slate-700">Swift</span>
-                                <div class="flex gap-1"><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-orange-400 to-red-500 rounded-full" style="width:60%"></div></div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between items-center mb-2"><span class="font-medium text-slate-700">Android Studio</span>
-                                <div class="flex gap-1"><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full" style="width:80%"></div></div>
-                        </div>
-                    </div>
-
-                    <!-- Herramientas -->
-                    <div class="space-y-5">
-                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Herramientas</h3>
-                        <div>
-                            <div class="flex justify-between items-center mb-2"><span class="font-medium text-slate-700">GitHub</span>
-                                <div class="flex gap-1"><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-slate-700 to-slate-900 rounded-full" style="width:100%"></div></div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between items-center mb-2"><span class="font-medium text-slate-700">Docker</span>
-                                <div class="flex gap-1"><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 fill-current" style="color:#FACC15" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg><svg class="w-4 h-4 text-slate-300 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg></div>
-                            </div>
-                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full" style="width:40%"></div></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-12">
-                    <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Idiomas</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="font-semibold text-slate-900">Inglés</span>
-                                <span class="text-xs font-bold text-blue-600 bg-blue-100 px-3 py-1 rounded-full">C1 ADVANCED</span>
-                            </div>
-                            <p class="text-sm text-slate-600">Cambridge Certificate (CAE)</p>
-                        </div>
-                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="font-semibold text-slate-900">Francés</span>
-                                <span class="text-xs font-bold text-slate-600 bg-slate-200 px-3 py-1 rounded-full">NIVEL BÁSICO</span>
-                            </div>
-                            <p class="text-sm text-slate-600">Conocimientos básicos</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="py-16 px-6 max-w-6xl mx-auto">
-            <div class="flex items-center gap-3 mb-10">
-                <div class="p-2 bg-green-100 rounded-lg text-green-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
-                </div>
-                <h2 class="text-3xl font-bold text-slate-900">Proyectos Destacados</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- PROYECTO ERP - CETEMET  -->
-                <article class="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-48 overflow-hidden relative bg-gradient-to-br from-emerald-600 to-teal-700 flex items-center justify-center">
-                        <div class="text-center">
-                            <span class="block text-6xl font-bold text-white mb-1">ERP</span>
-                            <span class="text-white/90 text-sm tracking-widest">CETEMET</span>
-                        </div>
-                    </div>
-                    <div class="p-6 flex flex-col flex-1">
-                        <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">
-                            Módulo ERP con Sistema de Fichaje
-                        </h3>
-                        <p class="text-slate-600 text-sm mb-4 flex-1">
-                            Desarrollo de un módulo completo de ERP interno durante las prácticas en CETEMET. Incluye sistema de fichaje de empleados, gestión de permisos y panel administrativo. Enfoque principal en UX/UI amigable para usuarios en entornos industriales.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs font-medium px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md">Astro</span>
-                            <span class="text-xs font-medium px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md">Tailwind CSS</span>
-                            <span class="text-xs font-medium px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md">UX/UI</span>
-                            <span class="text-xs font-medium px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md">JavaScript</span>
-                        </div>
-                        <a href="https://github.com/ZZ497/Repositorio-ERP-Practicas" 
-                        target="_blank" 
-                        class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-xl hover:bg-slate-800 transition-colors mt-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
-                                <path d="M9 18c-4.51 2-5-2-7-2"/>
-                            </svg>
-                            Ver en GitHub
-                        </a>
-                    </div>
-                </article>
-                <article class="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-    <div class="h-48 bg-gradient-to-br from-blue-700 to-indigo-700 flex items-center justify-center">
-        <div class="text-center">
-            <span class="block text-5xl font-bold text-white mb-2">ServiHogar</span>
-            <span class="text-white/90 text-sm tracking-widest">SERVICIOS A DOMICILIO</span>
-        </div>
+    <div class="hero-actions">
+      <a class="btn-primary" href="mailto:diegolijarcio388@gmail.com">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+        diegolijarcio388@gmail.com
+      </a>
+      <a class="btn-ghost" href="https://github.com/ZZ497" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+        GitHub
+      </a>
+      <a class="btn-ghost" href="https://www.linkedin.com/in/diego-lijarcio-merino/" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
     </div>
-    <div class="p-6 flex flex-col flex-1">
-        <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">
-            ServiHogar - Plataforma de Servicios a Domicilio
-        </h3>
-        <p class="text-slate-600 text-sm mb-4 flex-1">
-            Aplicación web para la gestión de servicios a domicilio. Incluye sistema de login, panel de administración y diseño centrado en la experiencia de usuario.
-        </p>
-        <div class="flex flex-wrap gap-2 mb-6">
-            <span class="text-xs font-medium px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md">Astro</span>
-            <span class="text-xs font-medium px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md">Tailwind CSS</span>
-            <span class="text-xs font-medium px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md">JavaScript</span>
-            <span class="text-xs font-medium px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md">UX/UI</span>
+
+    <div class="hero-meta">
+      <span class="meta-item"><span class="meta-dot live"></span>Buscando trabajo</span>
+      <span class="meta-item"><span class="meta-dot"></span>Jaén, España</span>
+      <span class="meta-item"><span class="meta-dot"></span>Inglés C1 CAE</span>
+      <span class="meta-item"><span class="meta-dot"></span>Presencial / Remoto / Híbrido</span>
+    </div>
+  </section>
+
+  <div class="divider"><hr /></div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="fade-up">
+    <p class="section-eyebrow">Trayectoria</p>
+    <h2 class="section-title">Experiencia & Formación</h2>
+
+    <div class="exp-list">
+      <div class="exp-item">
+        <div class="exp-date">Abr – Jun<br>2026</div>
+        <div>
+          <p class="exp-company">CETEMET · Jaén</p>
+          <p class="exp-role">Frontend Developer — Prácticas</p>
+          <p class="exp-desc">Diseñé y construí desde cero un módulo ERP para gestión de fichajes y permisos. Decidí la arquitectura frontend de forma autónoma y orienté el diseño a usuarios no técnicos en entorno industrial. Parte del trabajo fue coordinar con el equipo vía Figma para que lo que se implementaba coincidiera con lo acordado.</p>
+          <div class="exp-tags">
+            <span class="tag">Astro</span>
+            <span class="tag">Tailwind CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Figma</span>
+            <span class="tag">Scrum</span>
+          </div>
         </div>
-        <a href="https://github.com/ZZ497/Proyecto-ServiHogar" 
-           target="_blank" 
-           class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-xl hover:bg-slate-800 transition-colors mt-auto">
-            Ver en GitHub
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-date">Ene – Abr<br>2025</div>
+        <div>
+          <p class="exp-company">CODE ARTS</p>
+          <p class="exp-role">Backend Developer — Prácticas</p>
+          <p class="exp-desc">Backend con Symfony en producción real. Estandaricé los entornos locales del equipo con Docker, lo que eliminó una clase entera de bugs por diferencias entre dev y producción. También optimicé consultas sobre SQLite y DynamoDB que estaban causando problemas de rendimiento.</p>
+          <div class="exp-tags">
+            <span class="tag">Symfony</span>
+            <span class="tag">PHP</span>
+            <span class="tag">Docker</span>
+            <span class="tag">SQLite</span>
+            <span class="tag">DynamoDB</span>
+            <span class="tag">Postman</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-date">2024 – 2026</div>
+        <div>
+          <p class="exp-company">CESUR Linares</p>
+          <p class="exp-role">Técnico Superior en DAM</p>
+          <p class="exp-desc">Desarrollo de aplicaciones multiplataforma: backend en Java y PHP, móvil nativo con Kotlin (Android) y Swift (iOS), bases de datos relacionales y diseño de interfaces con Figma.</p>
+          <div class="exp-tags">
+            <span class="tag">Java</span>
+            <span class="tag">Kotlin</span>
+            <span class="tag">Swift</span>
+            <span class="tag">PHP / Laravel</span>
+            <span class="tag">MySQL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-date">2024</div>
+        <div>
+          <p class="exp-company">Cambridge Assessment English</p>
+          <p class="exp-role">C1 Advanced (CAE)</p>
+          <p class="exp-desc">Certificación oficial de nivel avanzado. Puedo leer documentación técnica, participar en reuniones y comunicarme con equipos internacionales sin fricción.</p>
+          <div class="exp-tags">
+            <span class="tag">Inglés C1</span>
+            <span class="tag">Cambridge CAE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><hr /></div>
+
+  <!-- SKILLS -->
+  <section id="skills" class="fade-up">
+    <p class="section-eyebrow">Stack</p>
+    <h2 class="section-title">Tecnologías</h2>
+
+    <div class="skills-grid">
+      <div class="skill-group">
+        <p class="skill-group-title">Backend</p>
+        <div class="skill-tags">
+          <span class="skill-tag">PHP</span>
+          <span class="skill-tag">Laravel</span>
+          <span class="skill-tag">Symfony</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">SQLite</span>
+          <span class="skill-tag">DynamoDB</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-title">Frontend & Web</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Astro</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">HTML5</span>
+          <span class="skill-tag">CSS3</span>
+          <span class="skill-tag">Tailwind</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-title">Mobile</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Kotlin</span>
+          <span class="skill-tag">Android SDK</span>
+          <span class="skill-tag">Swift</span>
+          <span class="skill-tag">Xcode</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-title">Herramientas</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Postman</span>
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">Scrum</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><hr /></div>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="fade-up">
+    <p class="section-eyebrow">Trabajo</p>
+    <h2 class="section-title">Proyectos</h2>
+
+    <div class="projects-grid">
+
+      <div class="project-row">
+        <div>
+          <p class="project-type">ERP · Frontend · UX</p>
+          <h3 class="project-name">Sistema de Fichajes — CETEMET</h3>
+          <p class="project-desc">Módulo ERP interno construido durante las prácticas. Cubre registro de fichajes, gestión de permisos y panel de administración. Lo diseñé pensando en el personal del centro, no en otros devs.</p>
+          <div class="exp-tags">
+            <span class="tag">Astro</span>
+            <span class="tag">Tailwind</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Figma</span>
+          </div>
+        </div>
+        <a class="project-link" href="https://github.com/ZZ497/Repositorio-ERP-Practicas" target="_blank" rel="noopener">
+          GitHub
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
         </a>
-    </div>
-</article>
+      </div>
 
-                <!-- CAMBIO: enlace corregido a results-f1-kotlin -->
-                <article class="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-48 overflow-hidden relative flex items-center justify-center">
-                        <img src="./img/Formula 1_Logo_1.png" alt="F1 logo">
-                    </div>
-                    <div class="p-6 flex flex-col flex-1">
-                        <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">App Resultados F1</h3>
-                        <p class="text-slate-600 text-sm mb-4 flex-1">Aplicación con sistema de registro que muestra los resultados de puntuación de Fórmula Uno.</p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs font-medium px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md">Kotlin</span>
-                        </div>
-                        <a href="https://github.com/ZZ497/results-f1-kotlin" target="_blank" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-xl hover:bg-slate-800 transition-colors mt-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-                            Ver en GitHub
-                        </a>
-                    </div>
-                </article>
-
-                <!-- CAMBIO: enlace corregido a Game-of-Thrones-Kotlin -->
-                <article class="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-48 overflow-hidden relative bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center">
-                        <img src="./img/game-of-thrones" alt="Juego De Tronos">
-                    </div>
-                    <div class="p-6 flex flex-col flex-1">
-                        <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">App Juego de Tronos</h3>
-                        <p class="text-slate-600 text-sm mb-4 flex-1">Aplicación móvil que muestra información detallada sobre la serie y sus personajes.</p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="text-xs font-medium px-2.5 py-1 bg-slate-100 text-slate-600 rounded-md">Kotlin</span>
-                        </div>
-                        <a href="https://github.com/ZZ497/Game-of-Thrones-Kotlin" target="_blank" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-xl hover:bg-slate-800 transition-colors mt-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-                            Ver en GitHub
-                        </a>
-                    </div>
-                </article>
-
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-slate-900 text-slate-400 py-12 no-print border-t border-slate-800">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <div class="text-white font-semibold tracking-wide uppercase text-sm mb-2">Diego Lijarcio Merino</div>
-            <div class="w-12 h-px bg-blue-500 mx-auto mb-4"></div>
-            <p class="text-xs text-slate-500">&copy; 2026 — Todos los derechos reservados.</p>
-            <div class="mt-4 text-[10px] text-slate-700 uppercase tracking-[0.2em]">Diseño Profesional & Desarrollo</div>
+      <div class="project-row">
+        <div>
+          <p class="project-type">Web · Full-stack</p>
+          <h3 class="project-name">ServiHogar</h3>
+          <p class="project-desc">Plataforma de gestión de servicios a domicilio con autenticación, panel de admin y solicitudes. Backend en Laravel con MySQL, frontend en Astro.</p>
+          <div class="exp-tags">
+            <span class="tag">Laravel</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">Astro</span>
+            <span class="tag">Tailwind</span>
+          </div>
         </div>
-    </footer>
+        <a class="project-link" href="https://github.com/ZZ497/Proyecto-ServiHogar" target="_blank" rel="noopener">
+          GitHub
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+
+      <div class="project-row">
+        <div>
+          <p class="project-type">Android · Kotlin</p>
+          <h3 class="project-name">F1 Results</h3>
+          <p class="project-desc">App nativa de Fórmula 1. Consume una API REST externa, arquitectura limpia y gestión del ciclo de vida de actividades y fragmentos.</p>
+          <div class="exp-tags">
+            <span class="tag">Kotlin</span>
+            <span class="tag">Android SDK</span>
+            <span class="tag">REST API</span>
+          </div>
+        </div>
+        <a class="project-link" href="https://github.com/ZZ497/results-f1-kotlin" target="_blank" rel="noopener">
+          GitHub
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+
+      <div class="project-row">
+        <div>
+          <p class="project-type">Android · Kotlin</p>
+          <h3 class="project-name">Game of Thrones App</h3>
+          <p class="project-desc">App con listado de personajes, búsqueda y vista de detalle. Clean Architecture, consumo de API y RecyclerView con adaptador personalizado.</p>
+          <div class="exp-tags">
+            <span class="tag">Kotlin</span>
+            <span class="tag">Android SDK</span>
+            <span class="tag">Clean Architecture</span>
+            <span class="tag">REST API</span>
+          </div>
+        </div>
+        <a class="project-link" href="https://github.com/ZZ497/Game-of-Thrones-Kotlin" target="_blank" rel="noopener">
+          GitHub
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"><hr /></div>
+
+  <!-- CONTACT -->
+  <section id="contact" class="fade-up">
+    <div class="contact-wrap">
+      <p class="section-eyebrow" style="text-align:center">Contacto</p>
+      <h2 class="contact-headline">Si tienes algo<br>interesante, cuéntame.</h2>
+      <p class="contact-sub">Busco mi primera posición estable como desarrollador, en remoto o híbrido. Si hay encaje, hablamos.</p>
+      <div class="contact-links">
+        <a class="btn-primary" href="mailto:diegolijarcio388@gmail.com">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+          diegolijarcio388@gmail.com
+        </a>
+        <a class="btn-ghost" href="https://www.linkedin.com/in/diego-lijarcio-merino/" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-text">© 2026 Diego Lijarcio</span>
+    <div class="footer-links">
+      <a href="https://github.com/ZZ497" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/diego-lijarcio-merino/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:diegolijarcio388@gmail.com">Email</a>
+    </div>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  </script>
 </body>
 </html>
